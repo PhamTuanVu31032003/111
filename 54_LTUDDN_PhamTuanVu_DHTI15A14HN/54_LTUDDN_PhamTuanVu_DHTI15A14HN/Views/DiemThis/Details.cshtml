@@ -1,0 +1,50 @@
+﻿@model _54_LTUDDN_PhamTuanVu_DHTI15A14HN.Models.DiemThi
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DiemThi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayThi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayThi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Diem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SinhVien.TenSV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SinhVien.TenSV)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

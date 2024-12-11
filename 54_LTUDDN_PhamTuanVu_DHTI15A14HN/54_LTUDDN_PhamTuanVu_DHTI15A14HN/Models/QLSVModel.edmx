@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLSVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DiemThi">
+          <Key>
+            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="TenMT" />
+          </Key>
+          <Property Name="MaSV" Type="int" Nullable="false" />
+          <Property Name="TenMT" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SoTC" Type="int" />
+          <Property Name="NgayThi" Type="datetime" />
+          <Property Name="Diem" Type="decimal" Precision="4" Scale="1" />
+        </EntityType>
+        <EntityType Name="SinhVien">
+          <Key>
+            <PropertyRef Name="MaSV" />
+          </Key>
+          <Property Name="MaSV" Type="int" Nullable="false" />
+          <Property Name="TenSV" Type="nvarchar" MaxLength="50" />
+          <Property Name="NamSinh" Type="smallint" />
+          <Property Name="GioiTinh" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK_DiemThi_ToSinhVien">
+          <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="1" />
+          <End Role="DiemThi" Type="Self.DiemThi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SinhVien">
+              <PropertyRef Name="MaSV" />
+            </Principal>
+            <Dependent Role="DiemThi">
+              <PropertyRef Name="MaSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLSVModelStoreContainer">
+          <EntitySet Name="DiemThi" EntityType="Self.DiemThi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DiemThi_ToSinhVien" Association="Self.FK_DiemThi_ToSinhVien">
+            <End Role="SinhVien" EntitySet="SinhVien" />
+            <End Role="DiemThi" EntitySet="DiemThi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLSVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DiemThi">
+          <Key>
+            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="TenMT" />
+          </Key>
+          <Property Name="MaSV" Type="Int32" Nullable="false" />
+          <Property Name="TenMT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SoTC" Type="Int32" />
+          <Property Name="NgayThi" Type="DateTime" Precision="3" />
+          <Property Name="Diem" Type="Decimal" Precision="4" Scale="1" />
+          <NavigationProperty Name="SinhVien" Relationship="Self.FK_DiemThi_ToSinhVien" FromRole="DiemThi" ToRole="SinhVien" />
+        </EntityType>
+        <EntityType Name="SinhVien">
+          <Key>
+            <PropertyRef Name="MaSV" />
+          </Key>
+          <Property Name="MaSV" Type="Int32" Nullable="false" />
+          <Property Name="TenSV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NamSinh" Type="Int16" />
+          <Property Name="GioiTinh" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DiemThis" Relationship="Self.FK_DiemThi_ToSinhVien" FromRole="SinhVien" ToRole="DiemThi" />
+        </EntityType>
+        <Association Name="FK_DiemThi_ToSinhVien">
+          <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="1" />
+          <End Role="DiemThi" Type="Self.DiemThi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SinhVien">
+              <PropertyRef Name="MaSV" />
+            </Principal>
+            <Dependent Role="DiemThi">
+              <PropertyRef Name="MaSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLSVDataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DiemThis" EntityType="Self.DiemThi" />
+          <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
+          <AssociationSet Name="FK_DiemThi_ToSinhVien" Association="Self.FK_DiemThi_ToSinhVien">
+            <End Role="SinhVien" EntitySet="SinhViens" />
+            <End Role="DiemThi" EntitySet="DiemThis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLSVModelStoreContainer" CdmEntityContainer="QLSVDataContext">
+          <EntitySetMapping Name="DiemThis">
+            <EntityTypeMapping TypeName="QLSVModel.DiemThi">
+              <MappingFragment StoreEntitySet="DiemThi">
+                <ScalarProperty Name="MaSV" ColumnName="MaSV" />
+                <ScalarProperty Name="TenMT" ColumnName="TenMT" />
+                <ScalarProperty Name="SoTC" ColumnName="SoTC" />
+                <ScalarProperty Name="NgayThi" ColumnName="NgayThi" />
+                <ScalarProperty Name="Diem" ColumnName="Diem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SinhViens">
+            <EntityTypeMapping TypeName="QLSVModel.SinhVien">
+              <MappingFragment StoreEntitySet="SinhVien">
+                <ScalarProperty Name="MaSV" ColumnName="MaSV" />
+                <ScalarProperty Name="TenSV" ColumnName="TenSV" />
+                <ScalarProperty Name="NamSinh" ColumnName="NamSinh" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
